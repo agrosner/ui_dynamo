@@ -5,7 +5,7 @@ class SafeProvider {
   static T of<T>(BuildContext context) {
     try {
       return Provider.of<T>(context);
-    } on ProviderNotFoundError {
+    } on ProviderNotFoundException {
       /// ignored error
       return null;
     }

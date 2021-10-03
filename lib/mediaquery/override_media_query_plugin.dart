@@ -43,7 +43,7 @@ class OverrideMediaQueryProvider extends ChangeNotifier {
         ? Orientation.landscape
         : Orientation.portrait;
     resetScreenAdjustments(
-      context.offsetProvider,
+      context.read<OffsetProvider>(),
       realQuery: MediaQuery.of(context),
       overrideData: this.boundedMediaQuery,
       shouldFlip: true,
@@ -163,7 +163,7 @@ class OverrideMediaQueryProvider extends ChangeNotifier {
 }
 
 OverrideMediaQueryProvider mediaQuery(BuildContext context) {
-  final provider = Provider.of<OverrideMediaQueryProvider>(context);
+  final provider = Provider.of<OverrideMediaQueryProvider>(context, listen: false);
   if (provider._currentMediaQuery == null) {
     provider._currentMediaQuery = MediaQuery.of(context);
     provider._boundedMediaQuery = provider._currentMediaQuery.copyWith(

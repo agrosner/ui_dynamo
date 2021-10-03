@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 import 'package:ui_dynamo/mediaquery/offset_plugin.dart';
 import 'package:ui_dynamo/mediaquery/override_media_query_plugin.dart';
 import 'package:ui_dynamo/ui/screen.dart';
@@ -66,7 +67,7 @@ class StoryboardController extends State<StoryBoard> {
     final mediaQueryData = query.boundedMediaQuery;
     final base = widget.child;
     final size = mediaQueryData.size;
-    final offsetProvider = context.offsetProvider;
+    final offsetProvider = context.watch<OffsetProvider>();
     return Scaffold(
       body: PanScrollDetector(
         onOffsetChange: (offset) => offsetProvider.offsetChange(offset),

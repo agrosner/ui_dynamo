@@ -1,14 +1,16 @@
 import 'package:example/widgets/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ui_dynamo/ui_dynamo.dart';
+import 'package:provider/src/provider.dart';
 import 'package:ui_dynamo/mediaquery/override_media_query_plugin.dart';
+import 'package:ui_dynamo/ui_dynamo.dart';
 
 DynamoPage buildToastPage() => DynamoPage.list(
       title: 'Toasts',
       icon: Icon(Icons.check_circle),
       children: (context) {
-        final currentMediaQuery = context.mediaQueryProvider.currentMediaQuery;
+        final currentMediaQuery =
+            context.read<OverrideMediaQueryProvider>().currentMediaQuery;
         final isLight =
             currentMediaQuery.platformBrightness == Brightness.light;
         final successPropGroup = PropGroup('Success', '');

@@ -14,9 +14,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  provider: ^3.0.0
-  rxdart: ^0.24.0
-  intl: ^0.16.1
+  provider: ^6.0.1
+  rxdart: ^0.27.2
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

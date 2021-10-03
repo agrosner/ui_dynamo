@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ui_dynamo/media_utils.dart';
 import 'package:ui_dynamo/mediaquery/device_size_plugin.dart';
 import 'package:ui_dynamo/mediaquery/device_sizes.dart';
@@ -18,6 +19,7 @@ class MediaChooserButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final deviceName =
         deviceDisplay(context, selectedDevice, shortName: context.isMobile);
+    final deviceSizes = context.watch<DeviceSizesPlugin>();
     return PopupMenuButton(
       tooltip: 'Choose Preview Window Size',
       child: Padding(
@@ -37,7 +39,7 @@ class MediaChooserButton extends StatelessWidget {
         ),
       ),
       onSelected: deviceSelected,
-      itemBuilder: (BuildContext context) => context.deviceSizes.devices
+      itemBuilder: (BuildContext context) => deviceSizes.devices
           .map(
             (key) => buildDeviceOption(context, key, selectedDevice),
           )

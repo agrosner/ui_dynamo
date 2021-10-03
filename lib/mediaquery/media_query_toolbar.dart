@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/src/provider.dart';
 import 'package:ui_dynamo/localization/locale_chooser.dart';
 import 'package:ui_dynamo/media_utils.dart';
 import 'package:ui_dynamo/mediaquery/device_sizes.dart';
@@ -281,8 +282,8 @@ class _Icons extends StatelessWidget {
   Widget build(BuildContext context) {
     final expandable = context.isMobile;
     final realQuery = MediaQuery.of(context);
-    final offsetProvider = context.offsetProvider;
-    final mediaQueryProvider = context.mediaQueryProvider;
+    final offsetProvider = context.watch<OffsetProvider>();
+    final mediaQueryProvider = context.watch<OverrideMediaQueryProvider>();
     if (expandable && !isExpanded) {
       return Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
@@ -311,7 +312,8 @@ class _Icons extends StatelessWidget {
               context, value, mediaQueryProvider, realQuery, offsetProvider),
           selectedDevice: mediaQueryProvider.currentDevice,
         ),
-        if (mediaQueryProvider.currentDevice.expansionAxis != ExpansionAxis.Both) ...[
+        if (mediaQueryProvider.currentDevice.expansionAxis !=
+            ExpansionAxis.Both) ...[
           ZoomControls(
             scale: offsetProvider.screenScale,
             updateScale: (value) => _updateScale(value, offsetProvider),

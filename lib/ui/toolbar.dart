@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/src/provider.dart';
 import 'package:ui_dynamo/mediaquery/override_media_query_plugin.dart';
 import 'package:ui_dynamo/plugins/plugin.dart';
 import 'package:ui_dynamo/ui/widgets/measuresize.dart';
@@ -128,7 +129,7 @@ class _ToolbarPaneState extends State<ToolbarPane> {
   }
 
   void _sizeChanged(Size size) {
-    final provider = context.mediaQueryProvider;
+    final provider = context.read<OverrideMediaQueryProvider>();
     if (widget.onBottom) {
       provider.pluginsUISizeChanged(Size(0, size.height));
     } else {

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:ui_dynamo/plugins/plugin.dart';
 import 'package:provider/provider.dart';
+import 'package:ui_dynamo/plugins/plugin.dart';
 
 class OffsetProvider extends ChangeNotifier {
   /// this will be offset at scale 1.0
@@ -38,10 +38,6 @@ class OffsetProvider extends ChangeNotifier {
   double get screenScale => _currentScreenScale;
 
   Offset get currentOffset => _scaledOffset;
-}
-
-extension OffsetPluginExtension on BuildContext {
-  OffsetProvider get offsetProvider => Provider.of<OffsetProvider>(this);
 }
 
 DynamoPlugin offsetPlugin() => DynamoPlugin(

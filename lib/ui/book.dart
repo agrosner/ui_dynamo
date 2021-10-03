@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:ui_dynamo/actions/actions_plugin.dart';
-import 'package:ui_dynamo/ui_dynamo.dart';
 import 'package:ui_dynamo/localization/localizations_plugin.dart';
 import 'package:ui_dynamo/media_utils.dart';
 import 'package:ui_dynamo/mediaquery/device_size_plugin.dart';
@@ -18,7 +18,7 @@ import 'package:ui_dynamo/ui/materialapp+extensions.dart';
 import 'package:ui_dynamo/ui/model/page.dart';
 import 'package:ui_dynamo/ui/page_wrapper.dart';
 import 'package:ui_dynamo/ui/toolbar.dart';
-import 'package:provider/provider.dart';
+import 'package:ui_dynamo/ui_dynamo.dart';
 
 class Dynamo extends StatefulWidget {
   final DynamoData data;
@@ -98,8 +98,8 @@ class Dynamo extends StatefulWidget {
         DynamoFolder.of(
           title: 'Routes',
           pages: [
-            ...app.routes.entries.map((entry) =>
-                DynamoPage.of(title: entry.key, child: entry.value)),
+            ...app.routes.entries.map(
+                (entry) => DynamoPage.of(title: entry.key, child: entry.value)),
           ],
         ),
     ]);
@@ -147,8 +147,7 @@ class Dynamo extends StatefulWidget {
 class _DynamoState extends State<Dynamo> {
   bool isDrawerOpen = false;
 
-  void _selectPage(
-      DynamoPage page, DynamoItem folder, BuildContext context) {
+  void _selectPage(DynamoPage page, DynamoItem folder, BuildContext context) {
     drawer(context).select(context, folder.key, page.key, popDrawer: true);
   }
 
@@ -168,7 +167,7 @@ class _DynamoState extends State<Dynamo> {
         child: Builder(
           builder: (context) {
             final selectedPage = selectedPageFromWidget(widget.data, context);
-            final query = context.mediaQueryProvider;
+            final query = context.watch<OverrideMediaQueryProvider>();
             final desktop = context.isDesktop;
             final toolbarPane = selectedPage?.usesToolbar == true
                 ? ToolbarPane(
@@ -207,7 +206,7 @@ class _DynamoState extends State<Dynamo> {
                         _selectPage(page, folder, context),
                   ),
                 ),
-                resizeToAvoidBottomPadding: true,
+                resizeToAvoidBottomInset: true,
                 bottomNavigationBar: desktop ? null : toolbarPane,
                 body: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

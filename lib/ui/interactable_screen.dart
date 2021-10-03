@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:ui_dynamo/mediaquery/offset_plugin.dart';
 import 'package:ui_dynamo/mediaquery/override_media_query_plugin.dart';
 import 'package:ui_dynamo/ui/model/widget.dart';
@@ -6,7 +8,6 @@ import 'package:ui_dynamo/ui/page_wrapper.dart';
 import 'package:ui_dynamo/ui/screen.dart';
 import 'package:ui_dynamo/ui/storyboard/utils.dart';
 import 'package:ui_dynamo/ui/widgets/panscroll.dart';
-import 'package:rxdart/rxdart.dart';
 
 class InteractableScreen extends StatefulWidget {
   const InteractableScreen({
@@ -61,7 +62,7 @@ class _InteractableScreenState extends State<InteractableScreen> {
       (offset, isScrolling) => OffsetScrollEvent(offset, isScrolling),
     ).where((event) => !event.isScrolling).listen((event) {
       if (event.offset != null && !event.isScrolling) {
-        context.offsetProvider.offsetChange(event.offset);
+        context.read<OffsetProvider>().offsetChange(event.offset);
       }
     }).addTo(_subscription);
     _notScrollingThrottle
@@ -80,8 +81,8 @@ class _InteractableScreenState extends State<InteractableScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final query = context.mediaQueryProvider;
-    final offset = context.offsetProvider;
+    final query = context.watch<OverrideMediaQueryProvider>();
+    final offset = context.watch<OffsetProvider>();
     final realQuery = MediaQuery.of(context);
     // if window, move back to center and do not allow panning.
     final widthSmaller = query.scaledWidth(offset) <=

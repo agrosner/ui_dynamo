@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ui_dynamo/actions/actions_extensions.dart';
 import 'package:ui_dynamo/mediaquery/offset_plugin.dart';
 import 'package:ui_dynamo/mediaquery/override_media_query_plugin.dart';
 import 'package:ui_dynamo/models.dart';
 import 'package:ui_dynamo/props/props_plugin.dart';
 import 'package:ui_dynamo/ui/model/page.dart';
-import 'package:provider/provider.dart';
 
 class DrawerProvider extends ChangeNotifier {
   Key _selectedFolderKey = ValueKey('Home');
@@ -17,7 +17,8 @@ class DrawerProvider extends ChangeNotifier {
     _selectedPageKey = pageKey;
     context.safeProps?.reset();
     context.safeActions?.reset();
-    context.mediaQueryProvider.resetScreenAdjustments(context.offsetProvider,
+    context.read<OverrideMediaQueryProvider>().resetScreenAdjustments(
+        context.read<OffsetProvider>(),
         realQuery: MediaQuery.of(context));
     if (popDrawer) {
       Navigator.of(context).pop();

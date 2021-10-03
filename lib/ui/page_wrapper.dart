@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/src/provider.dart';
 import 'package:ui_dynamo/localization/localizations_plugin.dart';
 import 'package:ui_dynamo/mediaquery/device_sizes.dart';
 import 'package:ui_dynamo/mediaquery/media_query_toolbar.dart';
@@ -77,7 +78,7 @@ class _DynamoPageWrapperState extends State<DynamoPageWrapper> {
 class _MediaQueryWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final provider = context.mediaQueryProvider;
+    final provider = context.watch<OverrideMediaQueryProvider>();
     return MeasureSize(
         onChange: (size) => provider.toolbarHeightChanged(size.height),
         child: MediaQueryToolbar());
@@ -94,7 +95,7 @@ class _NonScrollableScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final query = context.mediaQueryProvider;
+    final query = context.watch<OverrideMediaQueryProvider>();
     final localizations = context.locales;
     return base.isolatedCopy(
       context,
